@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.bg{
+    text-align: center;
+    background-image: url('../../public/math.png');
+    margin: 0;
+    padding: 0;
+    min-width: 800px;
+}
+.bigTitle {
+    line-height: 68px;
+    min-height: 68px;
+    padding-left: 1.5px;
+    font-family: Arial;
+    text-shadow: 1px 0px 0px #525252;
+    font-size: 53.5px;
+    color: #525252;
+    background: rgba(249,249,249,0.35);
+    border-radius: 25px;
+    text-decoration: none;
+    white-space: nowrap;
+}
