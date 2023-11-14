@@ -18,7 +18,7 @@ export default function Hash({params}: { params: { hash: string } }) {
 
     return (
         <>
-            <p>Redirecting......</p>
+            <div className="loader"></div>
         </>
     )
 }
