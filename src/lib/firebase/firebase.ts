@@ -30,20 +30,28 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const collection_name: string = "urls";
+const collection_names: string[] = ["urls", "ips"];
 
-export async function writeData(urlMapping: any) {
+export async function writeDataToUrls(urlMapping: any) {
     try {
         const document = await findMapping('originalUrl', urlMapping.originalUrl)
         if (document) {
             await updateDoc(document.ref, {shortUrl: urlMapping.shortUrl})
             return urlMapping.shortUrl;
         }
-        await addDoc(collection(db, collection_name), urlMapping);
+        await addDoc(collection(db, collection_names[0]), urlMapping);
         return urlMapping.shortUrl;
     } catch (e) {
         console.error("Error adding document: ", e);
         return null;
+    }
+}
+
+export function writeDataToIps(options: any) {
+    try {
+        addDoc(collection(db, collection_names[1]), options)
+    } catch (e) {
+        console.error("Error writeDataToIps: ", e);
     }
 }
 

@@ -8,9 +8,8 @@ export default function Hash({params}: { params: { hash: string } }) {
     const [redirect, setRedirect] = useState(false);
     useEffect(() => {
         if (redirect) {
-            console.log(params)
-             getUrl(params.hash);
-             // setRedirect(false)
+            getUrl(params.hash);
+            // setRedirect(false)
         }
     }, [redirect])
     setTimeout(() => {

@@ -15,14 +15,17 @@ export async function POST(req: NextRequest): Promise<NextResponse<ResponseData>
         return NextResponse.json({error: 'Original URL is required.'}, {status: 400});
     }
     const shortUrl = nanoid(6);
-    const promise = await FirebaseService.writeData({originalUrl, shortUrl});
+    const promise = await FirebaseService.writeDataToUrls({originalUrl, shortUrl});
     return NextResponse.json({value: promise}, {status: 200})
 }
 
 export async function GET(req: NextRequest): Promise<NextResponse<any>> {
     const params = await req.nextUrl.searchParams;
-    const hash:any = params.get("hash");
+    const hash: any = params.get("hash");
     try {
+        const op:string[] =[];
+        req.headers.forEach((value, key) => op.push(key,value))
+        FirebaseService.writeDataToIps({headers: op, url: req.url, timestamp: new Date()})
         const doc = await FirebaseService.findMapping("shortUrl", hash);
         return NextResponse.json({value: doc.data().originalUrl}, {status: 200});
     } catch (error: any) {

@@ -43,7 +43,6 @@ export default function Form() {
     const copy = () => {
 
         navigator.clipboard.writeText(shortUrl);
-        console.log(shortUrl)
         setIsCopied(true);
         setTimeout(() => {
             setIsCopied(false);
