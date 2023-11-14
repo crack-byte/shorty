@@ -23,8 +23,8 @@ export async function GET(req: NextRequest): Promise<NextResponse<any>> {
     const params = await req.nextUrl.searchParams;
     const hash: any = params.get("hash");
     try {
-        const op:any[] =[];
-        req.headers.forEach((value, key) => op.push(key,value))
+        const op = new Map<string, any>();
+        req.headers.forEach((value, key) => op.set(key, value))
         FirebaseService.writeDataToIps({headers: op, url: req.url, timestamp: new Date()})
         const doc = await FirebaseService.findMapping("shortUrl", hash);
         return NextResponse.json({value: doc.data().originalUrl}, {status: 200});
