@@ -10,7 +10,6 @@ import {
     updateDoc,
     where
 } from "firebase/firestore";
-import {debug} from "util";
 
 const apiKey = process.env.apiKey;
 const authDomain = process.env.authDomain;
@@ -31,8 +30,7 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-const collection_name = "urls";
+const collection_name: string = "urls";
 
 export async function writeData(urlMapping: any) {
     try {
@@ -50,11 +48,17 @@ export async function writeData(urlMapping: any) {
 }
 
 export async function findMapping(field: string, value: string) {
-    const q = query(collection(db, collection_name), where(field, "==", value));
-    const querySnapshot = await getDocs(q);
-    let validate: any = null;
-    querySnapshot.forEach((doc: QueryDocumentSnapshot<DocumentData, DocumentData>) => {
-        validate = doc;
-    });
+    console.log(field + ':' + value);
+    const q = query(collection(db, 'urls'), where(field, "==", value));
+    let validate: any = {};
+    try {
+        const querySnapshot = await getDocs(q);
+        console.log(querySnapshot.size)
+        querySnapshot.forEach(snap => {
+            validate = snap;
+        });
+    } catch (e) {
+        console.error(e);
+    }
     return validate;
 }
