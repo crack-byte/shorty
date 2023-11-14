@@ -24,14 +24,7 @@ export async function GET(req: NextRequest): Promise<NextResponse<any>> {
     const hash:any = params.get("hash");
     try {
         const doc = await FirebaseService.findMapping("shortUrl", hash);
-        const parsedUrl = new URL(doc.data().originalUrl);
-        console.log(parsedUrl)
-
-        const nextResponse = NextResponse.redirect(parsedUrl);
-        nextResponse.headers.set('Access-Control-Allow-Origin', '*')
-        nextResponse.headers.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
-        return nextResponse;
+        return NextResponse.json({value: doc.data().originalUrl}, {status: 200});
     } catch (error: any) {
         return NextResponse.json({error: error.message}, {status: 500});
     }

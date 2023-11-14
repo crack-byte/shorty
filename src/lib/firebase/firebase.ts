@@ -48,12 +48,10 @@ export async function writeData(urlMapping: any) {
 }
 
 export async function findMapping(field: string, value: string) {
-    console.log(field + ':' + value);
     const q = query(collection(db, 'urls'), where(field, "==", value));
     let validate: any = null;
     try {
         const querySnapshot = await getDocs(q);
-        console.log(querySnapshot.size)
         querySnapshot.forEach(snap => {
             validate = snap;
         });

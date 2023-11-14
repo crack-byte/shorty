@@ -8,7 +8,9 @@ export default function Hash({params}: { params: { hash: string } }) {
     const [redirect, setRedirect] = useState(false);
     useEffect(() => {
         if (redirect) {
+            console.log(params)
              getUrl(params.hash);
+             // setRedirect(false)
         }
     }, [redirect])
     setTimeout(() => {
@@ -26,8 +28,10 @@ const getUrl = (value: string) => {
         const params = {
             hash: value,
         };
-        axios.get('/api/shorten', {params})
+        axios.get('/api/shorten', {params}).then(r => {
+            window.location.replace(r.data.value)
+        })
     } catch (error) {
-        return '';
+        console.log(error)
     }
 };
